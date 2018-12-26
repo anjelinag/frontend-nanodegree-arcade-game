@@ -1,11 +1,33 @@
 // Enemies our player must avoid
-var Enemy = function() {
+var Enemy = function(speed, x, y) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
+    this.speed = speed;
+    this.x = x;
+    this.y = y;
+};
+
+var Player = function(speed, x, y) {
+    this.sprite = 'images/char-princess-girl.png';
+    this.speed = speed;
+    this.x = x;
+    this.y = y;
+};
+
+Player.prototype.update = function() {
+    // To fill-in
+};
+
+Player.prototype.render = function() {
+    // To fill-in
+};
+
+Player.prototype.handleInput = function() {
+    // To fill-in
 };
 
 // Update the enemy's position, required method for game
@@ -29,6 +51,13 @@ Enemy.prototype.render = function() {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
+
+allEnemies = []; //there will be multiple enemies depending on the level of the game.
+
+var myEnemy = new Enemy(15,0,0);
+var player = new Player(7,0,0);
+
+allEnemies.push(myEnemy);
 
 
 
