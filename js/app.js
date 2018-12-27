@@ -26,8 +26,19 @@ Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-Player.prototype.handleInput = function() {
-    // To fill-in
+Player.prototype.handleInput = function(pressedKey) {
+    if(pressedKey == 'down') {
+        player.y = player.y + player.speed
+    }
+    if(pressedKey == 'up') {
+        player.y = player.y - player.speed
+    }
+    if(pressedKey == 'left') {
+        player.x = player.x - player.speed
+    }
+    if(pressedKey == 'right') {
+        player.x = player.x + player.speed
+    }
 };
 
 // Update the enemy's position, required method for game
