@@ -23,7 +23,7 @@ Player.prototype.update = function() {
 };
 
 Player.prototype.render = function() {
-    // To fill-in
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 Player.prototype.handleInput = function() {
@@ -55,7 +55,7 @@ Enemy.prototype.render = function() {
 allEnemies = []; //there will be multiple enemies depending on the level of the game.
 
 var myEnemy = new Enemy(15,0,0);
-var player = new Player(7,0,0);
+var player = new Player(7,0,200);
 
 allEnemies.push(myEnemy);
 
