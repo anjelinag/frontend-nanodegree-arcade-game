@@ -20,9 +20,20 @@ var Player = function(speed, x, y) {
 
 Player.prototype.update = function() {
     // To fill-in
-    //Player to return once it reached -90 on the y-axis on the canvas
+    //Player to stay in the canvas
     if(this.y <= -90){
         this.y = 400;
+        this.x = 200;
+    }
+    if(this.y >= 450){
+        this.y = 400;
+        this.x = 200;
+    }
+    if(this.x >= 505){
+        this.x = 450;
+    }
+    if(this.x <= 0){
+        this.x = 0;
     }
 };
 
