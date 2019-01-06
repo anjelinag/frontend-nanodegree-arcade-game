@@ -36,23 +36,36 @@ Player.prototype.update = function() {
         this.x = 0;
     }
 };
+//To check collision with enemy and if collision 
+//happens it will return the player to the initial position
+var contactWithEnemy = function(myEnemy){
+    if (
+        player.x < myEnemy.x + 60 &&
+        player.x + 37 > myEnemy.x &&
+        player.y < myEnemy.y + 25 &&
+        30 + player.y > myEnemy.y
+        ) {
 
+        player.x = 200;
+        player.y = 400;
+    }
+};
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 Player.prototype.handleInput = function(pressedKey) {
     if(pressedKey == 'down') {
-        player.y = player.y + player.speed
+        player.y = player.y + player.speed + 40;
     }
     if(pressedKey == 'up') {
-        player.y = player.y - player.speed
+        player.y = player.y - (player.speed + 40);
     }
     if(pressedKey == 'left') {
-        player.x = player.x - player.speed
+        player.x = player.x - (player.speed + 60);
     }
     if(pressedKey == 'right') {
-        player.x = player.x + player.speed
+        player.x = player.x + player.speed + 60;
     }
 };
 
@@ -67,6 +80,7 @@ Enemy.prototype.update = function(dt) {
     if(this.x >= 505){
         this.x = 0;
     }
+    contactWithEnemy(this);
 };
 
 // Draw the enemy on the screen, required method for game
