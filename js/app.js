@@ -47,6 +47,7 @@ var contactWithEnemy = function(myEnemy){
         player.x = 200;
         player.y = 400;
         announceGameStatus('Game Over. You lose!');
+        addReplayFunctionality();
         endGame(allEnemies);
     }
 };
@@ -61,13 +62,26 @@ var endGame = function(enemies) {
 //Announce if the game is won or lost.
 var announceGameStatus = function(message) {
     var canvas = document.getElementsByTagName('canvas')[0];
-    scoreLevelElement.innerHTML = message; 
+    var replayButton = '<div class="restart"><i class="fa fa-repeat"></i></div>' 
+    scoreLevelElement.innerHTML =  message + replayButton;
     document.body.appendChild(scoreLevelElement, canvas);
 };
-//Check is the game is won. 
+
+
+var addReplayFunctionality = function() {
+    var replayElement = document.getElementsByClassName('fa-repeat');
+    replayElement[0].addEventListener('click', function() {
+        location.reload();
+    });
+};
+
+//Check if the game is won. 
 var checkIfGameIsWon = function() {
     if(player.y <= 0 ) {
-        announceGameStatus('Congratulation, You won!');
+        player.x = 200;
+        player.y = 400;
+        announceGameStatus('Congratulation. You won!');
+        addReplayFunctionality();
         endGame(allEnemies);
     }
 };
