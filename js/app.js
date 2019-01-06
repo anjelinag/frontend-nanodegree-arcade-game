@@ -115,11 +115,15 @@ Enemy.prototype.render = function() {
 
 allEnemies = []; //there will be multiple enemies depending on the level of the game.
 
-var myEnemy = new Enemy(200, 0, 140);
+// var myEnemy = new Enemy(200, 0, 140);
 var player = new Player(90, 200, 400);
 var scoreLevelElement = document.createElement('div');
 
-allEnemies.push(myEnemy);
+//This will add multiple enemies to the game
+for (i=0; i<5; i++) {
+    var myEnemy = new Enemy(Math.random()*200, 0, Math.random()*170 + 55);
+    allEnemies.push(myEnemy);
+}
 
 
 
