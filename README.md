@@ -5,6 +5,7 @@
 Download or clone the game from github
 
 Use the following arrow key to play the game
+
 	* Up and Down arrow keys to go up and down
 	* Right and Left arrow keys to go left and right 
 
