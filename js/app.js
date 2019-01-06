@@ -46,6 +46,7 @@ var contactWithEnemy = function(myEnemy){
 
         player.x = 200;
         player.y = 400;
+        myEnemy.speed = 0;
         announceGameStatus('Game Over. You lose!')
     }
 };
@@ -59,6 +60,7 @@ var announceGameStatus = function(message) {
 var checkIfGameIsWon = function() {
     if(player.y <= 0 ) {
         announceGameStatus('Congratulation, You won!');
+        myEnemy.speed = 0;
     }
 };
 
