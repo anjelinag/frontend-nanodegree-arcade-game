@@ -1,3 +1,4 @@
+'use strict';
 // Enemies our player must avoid
 var Enemy = function(speed, x, y) {
     // Variables applied to each of our instances go here,
@@ -11,7 +12,7 @@ var Enemy = function(speed, x, y) {
     this.y = y;
 };
 
-var Player = function(speed, x, y) {
+const Player = function(speed, x, y) {
     this.sprite = 'images/char-princess-girl.png';
     this.speed = speed;
     this.x = x;
@@ -28,7 +29,7 @@ Player.prototype.update = function() {
         this.y = 400;
     }
     if(this.x >= 505){
-        this.x = 450;
+        this.x = 400;
     }
     if(this.x <= 0){
         this.x = 0;
@@ -94,16 +95,16 @@ Player.prototype.render = function() {
 
 Player.prototype.handleInput = function(pressedKey) {
     if(pressedKey == 'down') {
-        player.y = player.y + player.speed + 40;
+        this.y = this.y + this.speed - 20;
     }
     if(pressedKey == 'up') {
-        player.y = player.y - (player.speed + 40);
+        this.y = this.y - this.speed - 40;
     }
     if(pressedKey == 'left') {
-        player.x = player.x - (player.speed + 60);
+        this.x = this.x - (this.speed + 60);
     }
     if(pressedKey == 'right') {
-        player.x = player.x + player.speed + 60;
+        this.x = this.x + this.speed + 60;
     }
 };
 
@@ -135,15 +136,15 @@ Enemy.prototype.render = function() {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-allEnemies = []; //there will be multiple enemies depending on the level of the game.
+var allEnemies = []; //there will be multiple enemies depending on the level of the game.
 
 // var myEnemy = new Enemy(200, 0, 140);
-var player = new Player(90, 200, 400);
+var player = new Player(30, 200, 400);
 var scoreLevelElement = document.createElement('div');
 
 //This will add multiple enemies to the game
-for (i=0; i<5; i++) {
-    var myEnemy = new Enemy(Math.random()*200, 0, Math.random()*170 + 55);
+for (var i=0; i<5; i++) {
+    var myEnemy = new Enemy(Math.random()*250, 0, Math.random()*170 + 55);
     allEnemies.push(myEnemy);
 }
 
