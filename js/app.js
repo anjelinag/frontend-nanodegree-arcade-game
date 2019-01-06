@@ -1,23 +1,26 @@
 'use strict';
-// Enemies our player must avoid
-//Enemy class using ES6
-class Enemy {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
 
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
-    constructor (speed, x, y) {
-        this.sprite = 'images/enemy-bug.png';
+// Define a superclass for game participants/actors or moving objects in the game.
+class GameActors {
+    // Variables applied to each of our instances
+    constructor(sprite, speed, x, y)  {
+        this.sprite = sprite;
         this.speed = speed;
         this.x = x;
         this.y = y;
     }
 
-    // Draw the enemy on the screen, required method for game
+    // Draw the game actors, enemies and player, on the screen, required method for game
     render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-    };
+    }
+};
+
+class Enemy extends GameActors {
+    
+    constructor(sprite, speed, x, y) {
+        super(sprite, speed, x, y);
+    }
 
     // Update the enemy's position, required method for game
     // Parameter: dt, a time delta between ticks
@@ -35,36 +38,17 @@ class Enemy {
         contactWithEnemy(this);
     };
 };
-//Player class using the ES6  
-class Player {
 
-    constructor(speed, x, y) {
-        this.sprite = 'images/char-princess-girl.png';
-        this.speed = speed;
-        this.x = x;
-        this.y = y;
+
+//Player class using the ES6  
+class Player extends GameActors { 
+
+    constructor(sprite, speed, x, y) {
+        super(sprite, speed, x, y);
     }
 
-    render() {
-        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-        checkIfGameIsWon();
-    } 
-
-     update() {
-        // To fill-in
-        //Player to stay in the canvas
-        if(this.y <= -100) {
-            this.y = -50;
-        }
-        if(this.x >= 505) {
-            this.x = 450;
-        }
-        if(this.x <= -50) {
-            this.x = -50;
-        }
-        if(this.y >= 500) {
-            this.y = 390;
-        }
+    update() {
+        checkIfGameIsWon();    
     };
 
     handleInput(keyPress) {
@@ -79,6 +63,23 @@ class Player {
         }
         if (keyPress == 'down') {
             this.y = this.y + this.speed - 20;
+        }
+
+
+        // The following series of if blocks is mean to  move the player back to the initial 
+        // starting location when it advances outside of the canvas
+        if(this.y <= -100) {
+            this.y = -50;
+        }
+
+        if(this.x >= 404) {
+            this.x = 404;
+        }
+        if(this.x <= 0) {
+            this.x = 0;
+        }
+        if(this.y >= 390) {
+            this.y = 390;
         }
     };
 };
@@ -140,15 +141,14 @@ var checkIfGameIsWon = function() {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-var allEnemies = []; //there will be multiple enemies depending on the level of the game.
-
-// var myEnemy = new Enemy(200, 0, 140);
-var player = new Player(50, 200, 400);
+var player = new Player('images/char-princess-girl.png', 50, 200, 400);
 var scoreLevelElement = document.createElement('div');
+
+var allEnemies = []; //there will be multiple enemies 
 
 //This will add multiple enemies to the game
 for (var i=0; i<5; i++) {
-    var myEnemy = new Enemy(Math.random()*250, 0, Math.random()*170 + 55);
+    var myEnemy = new Enemy('images/enemy-bug.png', Math.random()*250, 0, Math.random()*170 + 55);
     allEnemies.push(myEnemy);
 }
 
