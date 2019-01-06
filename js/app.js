@@ -1,40 +1,88 @@
 'use strict';
 // Enemies our player must avoid
-var Enemy = function(speed, x, y) {
+//Enemy class using ES6
+class Enemy {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
-    this.sprite = 'images/enemy-bug.png';
-    this.speed = speed;
-    this.x = x;
-    this.y = y;
+    constructor (speed, x, y) {
+        this.sprite = 'images/enemy-bug.png';
+        this.speed = speed;
+        this.x = x;
+        this.y = y;
+    }
+
+    // Draw the enemy on the screen, required method for game
+    render() {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    };
+
+    // Update the enemy's position, required method for game
+    // Parameter: dt, a time delta between ticks
+    update(dt) {
+        // You should multiply any movement by the dt parameter
+        // which will ensure the game runs at the same speed for
+        // all computers.
+        this.x = this.x + this.speed * dt;
+
+        // Keep the enemy within the canvas and have it come back to its original starting x-axis position
+        if(this.x >= 505) {
+            this.x = 0;
+        }
+
+        contactWithEnemy(this);
+    };
+};
+//Player class using the ES6  
+class Player {
+
+    constructor(speed, x, y) {
+        this.sprite = 'images/char-princess-girl.png';
+        this.speed = speed;
+        this.x = x;
+        this.y = y;
+    }
+
+    render() {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+        checkIfGameIsWon();
+    } 
+
+     update() {
+        // To fill-in
+        //Player to stay in the canvas
+        if(this.y <= -100) {
+            this.y = -50;
+        }
+        if(this.x >= 505) {
+            this.x = 450;
+        }
+        if(this.x <= -50) {
+            this.x = -50;
+        }
+        if(this.y >= 500) {
+            this.y = 390;
+        }
+    };
+
+    handleInput(keyPress) {
+        if (keyPress == 'left') {
+            this.x = this.x - (this.speed + 60);
+        }
+        if (keyPress == 'up') {
+            this.y = this.y - (this.speed - 20);
+        }
+        if (keyPress == 'right') {
+            this.x = this.x + this.speed + 60;
+        }
+        if (keyPress == 'down') {
+            this.y = this.y + this.speed - 20;
+        }
+    };
 };
 
-const Player = function(speed, x, y) {
-    this.sprite = 'images/char-princess-girl.png';
-    this.speed = speed;
-    this.x = x;
-    this.y = y;
-};
-
-Player.prototype.update = function() {
-    // To fill-in
-    //Player to stay in the canvas
-    if(this.y <= -100){
-        this.y = -50;
-    }
-    if(this.y >= 450){
-        this.y = 400;
-    }
-    if(this.x >= 505){
-        this.x = 400;
-    }
-    if(this.x <= 0){
-        this.x = 0;
-    }
-};
 //To check collision with enemy and if collision 
 //happens it will return the player to the initial position
 var contactWithEnemy = function(myEnemy){
@@ -87,50 +135,6 @@ var checkIfGameIsWon = function() {
     }
 };
 
-Player.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-//Modify DOM with game score and level
-    checkIfGameIsWon();
-};
-
-Player.prototype.handleInput = function(pressedKey) {
-    if(pressedKey == 'down') {
-        this.y = this.y + this.speed - 20;
-    }
-    if(pressedKey == 'up') {
-        this.y = this.y - this.speed - 40;
-    }
-    if(pressedKey == 'left') {
-        this.x = this.x - (this.speed + 60);
-    }
-    if(pressedKey == 'right') {
-        this.x = this.x + this.speed + 60;
-    }
-};
-
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
-Enemy.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
-    this.x = this.x + this.speed * dt;
-    //Keep the enemy within the canvas
-    if(this.x >= 505){
-        this.x = 0;
-    }
-    contactWithEnemy(this);
-};
-
-// Draw the enemy on the screen, required method for game
-Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
-
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
-
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -139,7 +143,7 @@ Enemy.prototype.render = function() {
 var allEnemies = []; //there will be multiple enemies depending on the level of the game.
 
 // var myEnemy = new Enemy(200, 0, 140);
-var player = new Player(30, 200, 400);
+var player = new Player(50, 200, 400);
 var scoreLevelElement = document.createElement('div');
 
 //This will add multiple enemies to the game
