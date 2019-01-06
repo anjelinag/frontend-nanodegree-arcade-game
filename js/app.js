@@ -46,10 +46,18 @@ var contactWithEnemy = function(myEnemy){
 
         player.x = 200;
         player.y = 400;
-        myEnemy.speed = 0;
-        announceGameStatus('Game Over. You lose!')
+        announceGameStatus('Game Over. You lose!');
+        endGame(allEnemies);
     }
 };
+
+var endGame = function(enemies) {
+     for ( var k=0; k < enemies.length; k++) {
+            enemies[k].speed = 0;
+    }
+};
+
+
 //Announce if the game is won or lost.
 var announceGameStatus = function(message) {
     var canvas = document.getElementsByTagName('canvas')[0];
@@ -60,13 +68,13 @@ var announceGameStatus = function(message) {
 var checkIfGameIsWon = function() {
     if(player.y <= 0 ) {
         announceGameStatus('Congratulation, You won!');
-        myEnemy.speed = 0;
+        endGame(allEnemies);
     }
 };
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-    //Modify DOM with game score and level
+//Modify DOM with game score and level
     checkIfGameIsWon();
 };
 
