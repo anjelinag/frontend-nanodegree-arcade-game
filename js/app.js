@@ -21,13 +21,11 @@ var Player = function(speed, x, y) {
 Player.prototype.update = function() {
     // To fill-in
     //Player to stay in the canvas
-    if(this.y <= -90){
-        this.y = 400;
-        this.x = 200;
+    if(this.y <= -100){
+        this.y = -50;
     }
     if(this.y >= 450){
         this.y = 400;
-        this.x = 200;
     }
     if(this.x >= 505){
         this.x = 450;
@@ -48,10 +46,26 @@ var contactWithEnemy = function(myEnemy){
 
         player.x = 200;
         player.y = 400;
+        announceGameStatus('Game Over. You lose!')
     }
 };
+//Announce if the game is won or lost.
+var announceGameStatus = function(message) {
+    var canvas = document.getElementsByTagName('canvas')[0];
+    scoreLevelElement.innerHTML = message; 
+    document.body.appendChild(scoreLevelElement, canvas);
+};
+//Check is the game is won. 
+var checkIfGameIsWon = function() {
+    if(player.y <= 0 ) {
+        announceGameStatus('Congratulation, You won!');
+    }
+};
+
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    //Modify DOM with game score and level
+    checkIfGameIsWon();
 };
 
 Player.prototype.handleInput = function(pressedKey) {
@@ -101,6 +115,7 @@ allEnemies = []; //there will be multiple enemies depending on the level of the 
 
 var myEnemy = new Enemy(200, 0, 140);
 var player = new Player(90, 200, 400);
+var scoreLevelElement = document.createElement('div');
 
 allEnemies.push(myEnemy);
 
